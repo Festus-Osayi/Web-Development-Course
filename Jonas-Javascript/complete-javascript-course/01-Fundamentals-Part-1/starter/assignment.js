@@ -1,32 +1,40 @@
-const dolphinsScore1 = 97;
-const dolphinsScore2 = 112;
-const dolphinsScore3 = 101;
-
-const koalasScore1 = 109;
-const koalasScore2 = 95;
-const koalasScore3 = 123;
+/**Assignment 1 - Values and Variables
+ * Declare variables called 'country', 'continent' and 'population' and
+ * assign their values according to your own country (population in millions)
+ * Log their values to the console
+ */
 
 
-const dolphinsScoreSum = dolphinsScore1 + dolphinsScore2 + dolphinsScore3;
-const dolphinsAverage = dolphinsScoreSum / 3;
+// let country = 'Nigeria';
+// let continent = 'Africa';
+// let population = 200_000_000
+// console.log(country)
+// console.log(continent)
+// console.log(population)
 
-const koalasScoreSum = koalasScore1 + koalasScore2 + koalasScore3;
-const koalasAverage = koalasScoreSum / 3;
+/**
+ * Coding challenge 1
+ * Mark and John are trying to compare their BMI (Body Mass Index), which is
+ * calculated using the formula:
+ * BMI = mass / height ** 2 = mass / (height * height) (mass in kg and height in meter).
+ * todo: Store Mark's and John's mass and height in variables
+ * todo: Calculate both their BMIs using the formula (you can even implement both versions)
+ * todo: Create a Boolean variable 'markHigherBMI' containing information about whether Mark
+ * has a higher BMI than John.
+ *** Test Data ***
+ * Data 1: Marks weights 78 kg and is 1.69 m tall. John weights 92 kg and is 1.95m tall.
+ * Data 2: Marks weights 95 kg and is 1.88 m tall. John weights 85 kg and is 1.76m tall.
+ */
 
-if (dolphinsAverage > koalasAverage && dolphinsAverage >= 100) {
-    console.log(`The dolphins average score of ${dolphinsAverage} is greater than koalas average score of ${koalasAverage}`);
-} else if (koalasAverage > dolphinsAverage && koalasAverage >= 100) {
-    console.log(`Koalas average of ${koalasAverage} is greater than dolphins average of ${dolphinsAverage}`)
-} else if (dolphinsAverage === koalasAverage || koalasAverage === dolphinsAverage && dolphinsAverage && koalasAverage >= 100) {
-    console.log(`it's a draw because the average ${dolphinsAverage} of dolphins is equal to the average ${koalasAverage} of koalas`)
-}
-else {
-    console.log(`in conclusion, we have no winner...`)
-}
-
-
-
-
-
-
-
+// const marksWeight = 78;
+// const marksHeight = 1.69;
+// const johnWeight = 92
+// const johnHeight = 1.95
+const marksWeight = 95;
+const marksHeight = 1.88;
+const johnWeight = 85
+const johnHeight = 1.76
+const marksBmi = marksWeight / marksHeight ** 2;
+const johnBmi = johnWeight / johnHeight ** 2
+const markHigherBMI = marksBmi > johnBmi
+console.log(markHigherBMI)
