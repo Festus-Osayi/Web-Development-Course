@@ -1,90 +1,103 @@
-'use strict';
+'use strict'
 
-const score0 = document.getElementById('score--0')
-const currentScore0 = document.getElementById('current--0')
-const score1 = document.getElementById('score--1')
-const currentScore1 = document.getElementById('current--1')
+// Selecting elements
+const score0El = document.getElementById('score--0')
+const score1El = document.getElementById('score--1')
 const diceEl = document.querySelector('.dice')
-const newBtn = document.querySelector('.btn--new')
-const rollBtn = document.querySelector('.btn--roll')
-const holdBtn = document.querySelector('.btn--hold')
-const player0 = document.querySelector('.player--0')
-const player1 = document.querySelector('.player--1')
+const player0El = document.querySelector('.player--0')
+const player1El = document.querySelector('.player--1')
+const currentScore0El = document.getElementById('current--0')
+const currentScore1El = document.getElementById('current--1')
+
+const btnNew = document.querySelector('.btn--new')
+const btnRoll = document.querySelector('.btn--roll')
+const btnHold = document.querySelector('.btn--hold')
 
 
-let currentscore, 
-activePlayer, 
-scores, isPlaying;
+// Starting conditions
+let
+    currentScore,
+    scores,
+    isGameActive
+let activePlayer = 0
+score0El.textContent = 0
+score1El.textContent = 0
+diceEl.classList.add('hidden')
 
+// implementing game functionality
 
-function initilize(){
-
-    score0.innerHTML = 0;
-    score1.innerHTML = 0;
-    currentscore = 0;
-    activePlayer = 0;
-
-    
-    scores = [0, 0];
-    isPlaying = true;
-    currentScore0.innerHTML = currentscore;
-    currentScore1.innerHTML = currentscore;
-
-    diceEl.classList.add('hidden');
-    player0.classList.remove('player--winner');
-    player1.classList.remove('player--winner');
-    player0.classList.remove('player--active')
-    player1.classList.remove('player--active')
-    player0.classList.add('player--active')
-    player1.classList.remove('player--active')
-}
-initilize();
-
-// This helps in switching between players.
+/** functionality to switch between players */
 function switchPlayer() {
-    document.getElementById(`current--${activePlayer}`).innerHTML = 0;
-    activePlayer = activePlayer === 0 ? 1 : 0;
-    currentscore = 0;
-    player0.classList.toggle('player--active')
-    player1.classList.toggle('player--active')
+    document.getElementById(`current--${activePlayer}`).textContent = 0
+    currentScore = 0
+    activePlayer = activePlayer === 0 ? 1 : 0
+    player0El.classList.toggle('player--active')
+    player1El.classList.toggle('player--active')
 }
 
+function init() {
+    currentScore = 0
+    scores = [0, 0]
+    isGameActive = true
+    player0El.classList.remove('player--winner')
+    player1El.classList.remove('player--winner')
+    player0El.classList.add('player--active')
+    player1El.classList.remove('player--active')
+    score0El.textContent = 0
+    score1El.textContent = 0
+    currentScore0El.textContent = 0
+    currentScore1El.textContent = 0
+    diceEl.classList.add('hidden')
 
-rollBtn.addEventListener('click', function () {
-    if (isPlaying) {
-        let dice = Math.trunc(Math.random() * 6) + 1
-        diceEl.classList.remove('hidden');
+}
+btnRoll.addEventListener('click', function () {
+    /**
+     * todo 1: generate random dice
+     * todo 2: display dice roll
+     * (is it 1)? 
+     * Yes: --> switch player
+     * No: add dice roll to current score
+     */
+    if (isGameActive) {
+        const dice = Math.trunc(Math.random() * 6) + 1
         diceEl.src = `dice-${dice}.png`
+        diceEl.classList.remove('hidden')
 
-        // check to see if the dice isn't one
         if (dice !== 1) {
-            currentscore += dice;
-            document.getElementById(`current--${activePlayer}`).innerHTML = currentscore
-        } else {
-            // switching between players...
-            switchPlayer();
+            currentScore += dice
+            document.getElementById(`current--${activePlayer}`).textContent = currentScore
+        }
+        else {
+            switchPlayer()
+
         }
     }
 })
 
-holdBtn.addEventListener('click', function () {
-    if (isPlaying) {
-        scores[activePlayer] += currentscore;
 
-        document.getElementById(`score--${activePlayer}`).innerHTML = scores[activePlayer];
+// Functionality to hold the game
+
+btnHold.addEventListener('click', function () {
+    /**
+     * todo 1: when clicked (add the current score to total score)
+     * todo 2: score >= 100 ? yes : no
+     * Yes: current player wins
+     * No: switch player
+     */
+    if (isGameActive) {
+        scores[activePlayer] += currentScore
+        document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer]
 
         if (scores[activePlayer] >= 100) {
-            isPlaying = false;
+            isGameActive = false
             document.querySelector(`.player--${activePlayer}`).classList.add('player--winner')
-            document.querySelector(`.player--${activePlayer}`).classList.remove('player--active')
             diceEl.classList.add('hidden')
         }
         else {
-            switchPlayer();
+            switchPlayer()
         }
+
     }
 })
 
-newBtn.addEventListener('click', initilize)
-
-
+btnNew.addEventListener('click', init)

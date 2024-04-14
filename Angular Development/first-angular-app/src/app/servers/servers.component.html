@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Event binding & String interpolation -->
+    <!-- event and property binding -->
+    <!-- <label for="server-name">Server Name</label>
+    <input
+      type="text"
+      class="form-control"
+      (input)="onUpdateServerName($event)"
+    /> -->
+    <!-- Two way Data binding -->
+    <input type="text" class="form-control" [(ngModel)]="serverName" />
+    <!-- ***** -->
+    <!-- <p>{{ serverName }}</p> -->
+    <br />
+    <button
+      class="btn-primary"
+      [disabled]="!serverIdDisabled"
+      (click)="onCreateServer()"
+    >
+      Add a new server
+    </button>
+    <p *ngIf="isServerCreated; else noServer">
+      Server created, server name {{ serverName }}
+    </p>
+    <ng-template #noServer>
+      <p>No server was created</p>
+    </ng-template>
+    <p
+      [ngStyle]="{ backgroundColor: getColor() }"
+      [ngClass]="{ online: serverStatus === 'online' }"
+      *ngFor="let server of servers"
+    >
+      {{ "Server" }} with ID {{ serverId }} is {{ getServerStatus() }}
+    </p>
+    <p [ngStyle]="{ backgroundColor: getColor() }">
+      {{ "Server" }} with ID {{ serverId }} is {{ getServerStatus() }}
+    </p>
+  </body>
+</html>

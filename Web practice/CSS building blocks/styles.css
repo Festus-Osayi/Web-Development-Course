@@ -1,0 +1,106 @@
+span {
+    background-color: yellow;
+}
+
+strong {
+    color: rebeccapurple;
+}
+
+em {
+    color: rebeccapurple;
+}
+
+h1 {
+    color: blue;
+}
+
+span.highlight {
+    background-color: red;
+}
+
+.notebook {
+    border: 5px solid green;
+    padding: 2rem;
+}
+
+.notebook.danger {
+    background-color: red;
+}
+
+/* attribute selector */
+
+li[class~='attri-selector'] {
+    color: red;
+}
+
+div[class='b'] {
+    background-color: rebeccapurple;
+}
+
+/* Attribute substring matching selectors */
+
+li[class|='ab'] {
+    color: red;
+}
+
+li[class^="a"] {
+    background-color: rebeccapurple;
+}
+
+li[class$="a"] {
+    background-color: yellow;
+}
+
+li[class*="a" i] {
+    color: red;
+}
+
+/* pseudo classes and pseudo elements */
+article p:first-child::first-line {
+    font-weight: bold;
+    font-size: 120%;
+}
+
+
+
+.box {
+    position: relative;
+    background: #88b7d5;
+    border: 4px solid #c2e1f5;
+}
+
+.box:after,
+.box:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.box:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: #88b7d5;
+    border-width: 30px;
+    margin-left: -30px;
+}
+
+.box:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #c2e1f5;
+    border-width: 36px;
+    margin-left: -36px;
+}
+
+/* combinators */
+
+h1 + p {
+
+    font-weight: bold;
+    background-color: #333;
+    color: #fff;
+    padding: .5em;
+}

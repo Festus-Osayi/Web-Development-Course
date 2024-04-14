@@ -1,0 +1,135 @@
+/***
+********************* Assessment 1 *************************
+* Make <h1>headings blue.
+* Give <h2>headings a blue background and white text.
+* Cause text wrapped in a <span>to have a font-size of 200%.
+*/
+
+/* h1 {
+    color: blue;
+}
+
+h2 {
+    background-color: blue;
+    color: white;
+}
+
+p span {
+    font-size: 200%;
+} */
+
+
+/***
+********************* Assessment 2 *************************
+* Give the element with an id of special a yellow background.
+* Give the element with a class of alert a 1px grey border.
+* If the element with a class of alert also has a class of stop,
+   make the background red.
+* If the element with a class of alert also has a class of go,
+  make the background green.
+*/
+
+/* #special {
+    background-color: yellow;
+}
+
+.alert {
+    border: 1px solid grey;
+}
+
+.alert.stop {
+    background-color: red;
+}
+
+.alert.go {
+    background-color: green;
+} */
+
+/***
+********************* Assessment 3 *************************
+* Style links,making the link-state orange, visited links green,
+  and remove the underline on hover.
+* Make the first element inside the container font-size: 150% and the first line of that element red.
+* Stripe every other row in the table by selecting these rows and giving them a background color of #333 and foreground of white.
+*/
+
+/* a:link {
+    color: orange;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.container p:first-child {
+    font-size: 150%;
+}
+
+.container p:first-child::first-line{
+    color: red;
+}
+
+table tr:nth-child(even) {
+    background-color: #333;
+    color: white;
+    
+    
+} */
+
+
+/**
+********************* Assessment 4 *************************
+* Make any paragraph that directly follows an <h2>element red.
+* Remove the bullets and add a 1px grey bottom border only to list items that are a direct child of the ul with a class of list.
+**/
+
+/* h2 + p {
+    color: red;
+}
+
+ul.list > li {
+    list-style-type: none;
+    border-bottom: 1px solid grey;
+} */
+
+
+
+/**
+********************* Assessment 5 *************************
+* target the <a>element with a title attribute and make the border pink (border-color: pink)
+* Target the <a>element with an href attribute that contains the word contact somewhere in its value and make the border orange (border-color: orange).
+* Target the <a>element with an href value starting with https and give it a green border (border-color: green).
+**/
+
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+
+ul li {
+    list-style-type: none;
+}
+
+li a {
+    border: 5px solid grey;
+    padding: 5px 10px;
+}
+
+a[title] {
+    border-color: pink;
+}
+
+a[href*="contact"]{
+    border-color: orange;
+}
+
+a[href^="https"]{
+    border-color: green;
+}

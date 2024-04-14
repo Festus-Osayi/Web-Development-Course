@@ -66,7 +66,134 @@ const calcTip = function (bill) {
     return bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.2
 }
 
-const bills = [125, 555, 44]
-const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[bills.length - 1])]
-const total = [bills[0] + tips[0], bills[1] + tips[1], bills[bills.length - 1] + tips[tips.length - 1]]
-console.log(total)
+// const bills = [125, 555, 44]
+// const tips = [calcTip(bills[0]), calcTip(bills[1]), calcTip(bills[bills.length - 1])]
+// const total = [bills[0] + tips[0], bills[1] + tips[1], bills[bills.length - 1] + tips[tips.length - 1]]
+// console.log(total)
+
+/** exercise challenge - objects */
+
+const jonas = {
+    firstName: 'Jonas',
+    lastName: 'Schmedtmann',
+    birthYear: 1991,
+    job: 'teacher',
+    friends: ['Michael', 'Peter', 'Steven'],
+    location: 'Portugal',
+    twitter: '@jonasSchmedtmann',
+    hasADriverLicense: true,
+    calcAge: function () {
+        this.age = 2037 - this.birthYear
+        return this.age
+    },
+
+    getSummary: function () {
+        console.log(`${this.firstName} is a ${this.age}-year old teacher, and he has ${this.hasADriverLicense ? "a driver's license" : "no driver's license"}`)
+    }
+
+
+}
+
+console.log(jonas.calcAge())
+console.log(jonas)
+jonas.getSummary()
+
+
+
+/** Coding Challenge 3
+ * Let's go back to Mark and John comparing their BMIs!
+ * This time, let's use objects to implement the calculations! Remember: 
+ * BMI = mass / (height * height) (mass in kg and height in meters).
+ * todo 1: For each of them, create an object with properties for their full 
+ * name, mass, and height (Mark Miller and John Smith). Name these objects 
+ * as mark and john, and their properties exactly as fullName, mass and height.
+ * todo 2: Create a calcBMI method on each object to calculate the BMI (the same
+ * method on both objects). Assign the BMI value to a property, and also return
+ * it from the method.
+ * todo 3: Log to the console who has the higher BMI, together with the full 
+ * name and the respective BMI. Example: "John Smith's BMI (28.3) is higher than
+ * Mark Miller's (23.9)!".
+ * TEST DATA: Marks weighs 78 kg and is 1.69 m tall. John weighs 92 kg and is 
+ * 1.95 m tall.
+ */
+
+const mark = {
+    fullName: "Mark Miller",
+    mass: 78,
+    height: 1.69,
+    calcBMI: function () {
+        this.markBMI = this.mass / (this.height ** 2)
+        return this.markBMI
+    }
+
+
+}
+
+const john = {
+    fullName: "John Smith",
+    mass: 92,
+    height: 1.95,
+    calcBMI: function () {
+        this.johnBMI = this.mass / (this.height ** 2)
+        return this.johnBMI
+    }
+
+
+}
+
+console.log(mark.calcBMI())
+console.log(john.calcBMI())
+
+console.log(`${mark.markBMI > john.johnBMI ? `${mark.fullName}'s BMI (${mark.markBMI}) is higher than ${john.fullName}'s (${john.johnBMI})!` : `${john.fullName}'s BMI (${john.johnBMI}) is higher than ${mark.fullName}'s (${mark.johnBMI})!`}`)
+
+
+let dice = Math.trunc(Math.random() * 6) + 1
+
+while (dice !== 6) {
+    console.log(`You rolled a ${dice}`)
+    dice = Math.trunc(Math.random() * 6) + 1
+}
+
+
+/** Coding Challenge 4 
+ * todo 1: Create an array called bills containing all 10 test bill values.
+ * todo 2: Create empty arrays for the tips and the totals (tips and totals)
+ * todo 3: Use the calcTip function we wrote before (included in the starter code) to 
+ * calculate tips and total values (bill + tip) for every bill value in the bills array. Use a for loop to perform the 10 calculations!
+ * TEST DATA: 22, 295, 176, 440, 37, 105, 10, 1100, 86, and 52.
+ * todo Bonus: Write a function 'calcAvg' which takes an array called 'arr' as
+ * an argument. This function calculates the average of all numbers in the given array.
+*/
+
+const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+const tips = [];
+const totals = [];
+
+for (let i = 0; i < bills.length; i++) {
+
+    tips.push(calcTip(bills[i]));
+    totals.push(bills[i] + tips[i])
+}
+
+console.log(totals)
+
+/** calculate the average number */
+const calcAvg = function(arr){
+    let sum = 0;
+    for(let i = 0; i < arr.length; i++){
+        sum += arr[i] / arr.length
+    }
+    return sum 
+}
+
+console.log(calcAvg(totals))
+
+
+
+
+
+
+
+
+
+

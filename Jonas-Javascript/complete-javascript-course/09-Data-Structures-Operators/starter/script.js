@@ -552,7 +552,7 @@ Then, call the function again with players from game.scored*/
 
 
 
-const game = {
+const games = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
   players: [
