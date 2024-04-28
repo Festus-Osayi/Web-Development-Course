@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2024-04-20T17:01:17.194Z',
+    '2024-04-26T23:36:17.929Z',
+    '2024-04-27T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -41,9 +41,9 @@ const account2 = {
     '2019-12-25T06:04:23.907Z',
     '2020-01-25T14:18:46.235Z',
     '2020-02-05T16:33:06.386Z',
-    '2020-04-10T14:43:26.374Z',
-    '2020-06-25T18:49:59.371Z',
-    '2020-07-26T12:01:20.894Z',
+    '2024-04-20T14:43:26.374Z',
+    '2024-04-26T18:49:59.371Z',
+    '2024-04-27T12:01:20.894Z',
   ],
   currency: 'USD',
   locale: 'en-US',
@@ -81,19 +81,36 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
-const displayMovements = function (movements, sort = false) {
+function formatMovementsDate(date) {
+  const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+  const daysPassed = calcDaysPassed(new Date(), date)
+  console.log(daysPassed);
+
+  const month = `${date.getMonth() + 1}`.padStart(2, 0)
+  if(daysPassed === 0) return `Today`
+  if(daysPassed === 1) return 'Yesterday'
+  const day = date.getDate()
+  const fullYear = date.getFullYear()
+  const hours = `${date.getHours()}`.padStart(2, 0)
+  const minute = `${date.getMinutes()}`.padStart(2, 0)
+  return `${month}/${day}/${fullYear}, ${hours}:${minute}`
+}
+
+const displayMovements = function (acc, movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  const movs = sort ? acc.movements.slice().sort((a, b) => a - b) : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const dates = new Date(acc.movementsDates[i])
 
+    const displayDate = formatMovementsDate(dates)
     const html = `
       <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
+        <div class="movements__type movements__type--${type}">${i + 1
+      } ${type}</div>
+      <div class='movements__date'>${displayDate}</div>
         <div class="movements__value">${(mov).toFixed(2)}€</div>
       </div>
     `;
@@ -116,7 +133,7 @@ const calcDisplaySummary = function (acc) {
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +143,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -142,7 +159,7 @@ createUsernames(accounts);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -151,9 +168,18 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+
+currentAccount = account1
+updateUI(currentAccount)
+containerApp.style.opacity = 100;
+
+const date = new Date()
+const month = `${date.getMonth() + 1}`.padStart(2, 0)
+
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -166,11 +192,15 @@ btnLogin.addEventListener('click', function (e) {
 
   if (currentAccount?.pin === +(inputLoginPin.value)) {
     // Display UI and message
-    labelWelcome.textContent = `Welcome back, ${
-      currentAccount.owner.split(' ')[0]
-    }`;
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+      }`;
     containerApp.style.opacity = 100;
 
+    const day = date.getDate()
+    const fullYear = date.getFullYear()
+    const hours = `${date.getHours()}`.padStart(2, 0)
+    const minute = `${date.getMinutes()}`.padStart(2, 0)
+    labelDate.textContent = `${month}/${day}/${fullYear}, ${hours}:${minute}`
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -197,7 +227,8 @@ btnTransfer.addEventListener('click', function (e) {
     // Doing the transfer
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
-
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -211,7 +242,7 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
-
+    currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
   }
@@ -251,4 +282,5 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
 
